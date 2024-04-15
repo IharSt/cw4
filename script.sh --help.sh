@@ -9,3 +9,42 @@ if [ "$1" = "--help" ]; then
     echo "  --logs          Create log files with the specified number of files"
     exit 0
 fi
+
+if [ "$1" = "--init" ]; then
+    git clone https://github.com/IharSt/cw4/tree/Tag1
+    repo_dir="$(pwd)/repozytorium"
+    echo "export PATH=\"$repo_dir:\$PATH\"" >> ~/.bashrc
+    source ~/.bashrc 
+    echo "Repozytorium zostało sklonowane i ścieżka została dodana do PATH."
+    exit 0
+fi
+
+echo "Usage: $0 --init"
+
+if [ "$1" = "--error" ] || [ "$1" = "-e" ]; then
+    count=${2:-100}
+    mkdir -p errorx
+    for ((i=1; i<=$count; i++)); do
+        echo "File: error$i.txt" > errorx/error$i.txt
+        echo "Created by: $0" >> errorx/error$i.txt
+        echo "Date: $(date)" >> errorx/error$i.txt
+    done
+
+    echo "Created $count files in the errorx directory."
+    exit 0
+fi
+
+if [ "$1" = "--logs" ]; then
+    count=${2:-100}
+
+    mkdir -p logx
+
+    for ((i=1; i<=$count; i++)); do
+        echo "File: log$i.txt" > logx/log$i.txt
+        echo "Created by: $0" >> logx/log$i.txt
+        echo "Date: $(date)" >> logx/log$i.txt
+    done
+
+    echo "Created $count files in the logx directory."
+    exit 0
+fi
